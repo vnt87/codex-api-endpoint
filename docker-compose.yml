@@ -1,7 +1,7 @@
 services:
-  chatmock:
+  codex-endpoint:
     image: ghcr.io/${GITHUB_REPOSITORY:-your-username/your-repo}:latest
-    container_name: chatmock
+    container_name: codex-endpoint
     ports:
       - "8000:8000"
     environment:
@@ -11,7 +11,7 @@ services:
       # - CHATGPT_LOCAL_CLIENT_ID=your_client_id
     volumes:
       # Persist auth data between container restarts
-      - chatmock_auth:/app/.chatgpt-local
+      - codex_endpoint_auth:/app/.chatgpt-local
       # Optional: Mount custom prompt.md
       # - ./prompt.md:/app/prompt.md:ro
     restart: unless-stopped
@@ -23,5 +23,5 @@ services:
       start_period: 40s
 
 volumes:
-  chatmock_auth:
+  codex_endpoint_auth:
     driver: local

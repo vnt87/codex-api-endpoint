@@ -1,13 +1,13 @@
-# ChatMock Docker Deployment
+# Codex Endpoint Docker Deployment
 
-This guide covers deploying ChatMock using Docker and Docker Compose.
+This guide covers deploying Codex Endpoint using Docker and Docker Compose.
 
 ## Quick Start
 
 1. **Clone the repository**
    ```bash
    git clone <your-repo-url>
-   cd chatmock
+   cd codex-endpoint
    ```
 
 2. **Update docker-compose.yml**
@@ -26,7 +26,7 @@ This guide covers deploying ChatMock using Docker and Docker Compose.
    
    ```bash
    # Run login command in the container
-   docker-compose exec chatmock python chatmock.py login
+   docker-compose exec codex-endpoint python chatmock.py login
    ```
    
    This will display a URL - open it in your browser to complete OAuth flow.
@@ -45,7 +45,7 @@ This guide covers deploying ChatMock using Docker and Docker Compose.
 
 ### Volumes
 
-- `chatmock_auth`: Persists authentication data between container restarts
+- `codex_endpoint_auth`: Persists authentication data between container restarts
 - Optional: Mount custom `prompt.md` file
 
 ### Custom Prompt
@@ -71,10 +71,10 @@ The Docker image is automatically built and pushed to GitHub Container Registry 
 
 ```bash
 # Build locally
-docker build -t chatmock .
+docker build -t codex-endpoint .
 
 # Run locally built image
-docker run -p 8000:8000 chatmock
+docker run -p 8000:8000 codex-endpoint
 ```
 
 ## Production Deployment
@@ -90,19 +90,19 @@ docker run -p 8000:8000 chatmock
 
 ```yaml
 services:
-  chatmock:
+  codex-endpoint:
     image: ghcr.io/your-username/your-repo:latest
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.chatmock.rule=Host(`api.yourdomain.com`)"
-      - "traefik.http.routers.chatmock.tls.certresolver=letsencrypt"
-      - "traefik.http.services.chatmock.loadbalancer.server.port=8000"
+      - "traefik.http.routers.codex-endpoint.rule=Host(`api.yourdomain.com`)"
+      - "traefik.http.routers.codex-endpoint.tls.certresolver=letsencrypt"
+      - "traefik.http.services.codex-endpoint.loadbalancer.server.port=8000"
 ```
 
 ## Troubleshooting
 
 ### Container Won't Start
-- Check logs: `docker-compose logs chatmock`
+- Check logs: `docker-compose logs codex-endpoint`
 - Verify `prompt.md` exists in the container
 
 ### Authentication Issues
